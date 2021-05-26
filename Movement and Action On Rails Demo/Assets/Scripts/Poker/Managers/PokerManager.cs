@@ -44,6 +44,19 @@ public class PokerManager : MonoBehaviour
     {
         get {return _contestantsInRound.Count;}
     }
+
+    //Give a deck to be used by the game manager
+    public void SetDeck(Deck d)
+    {
+        _deck = d;
+    }
+
+    //Give a list of contestants to be used by the game manager
+    public void SetContestants(List<AbstractContestant> contestants)
+    {
+        _contestants = contestants;
+    }
+    
     private void Awake() 
     {
         _ruleSet = GetComponent<IPokerGameType>();
@@ -568,6 +581,7 @@ public class PokerManager : MonoBehaviour
             contestant.betMoney = 0;
             contestant.status = ContestantStatus.NotCalled;
             contestant.AssignScore(0, "", null);
+            Debug.Log(contestant.hand);
             contestant.hand.Clear();
         }
     }

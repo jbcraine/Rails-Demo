@@ -20,7 +20,7 @@ public class PokerController : MonoBehaviour
     //This will be the max value of the raise slider
     private int roundStartingMoney;
     
-    private void Awake() {
+    private void Start() {
         player.MoneyChanged += OnMoneyChanged;
         game.BetChanged += OnBetChanged;
         game.PotChanged += OnPotChanged;
@@ -48,6 +48,18 @@ public class PokerController : MonoBehaviour
         raiseButton.interactable = false;
         foldButton.interactable = false;
         moneySlider.interactable = false;
+    }
+
+    //Assign a PokerManager to this controller
+    public void SetGameManager(PokerManager manager)
+    {
+        game = manager;
+    }
+
+    //Assign a PlayerContestant to this controller
+    public void SetPlayer(PlayerContestant player)
+    {
+        this.player = player;
     }
 
     public void OnCall()

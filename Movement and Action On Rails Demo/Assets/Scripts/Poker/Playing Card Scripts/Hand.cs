@@ -19,8 +19,11 @@ public class Hand : MonoBehaviour{
 
     private void Awake() {
         _view = GetComponent<HandView>();
+        Debug.Log(_view);
         if (_view != null)
         {
+            //Because AI contestnats no longer have a card view, this will break
+            
             HandCleared += _view.hand_Clear;
         }
         _cards = new List<Card>();
@@ -123,7 +126,9 @@ public class Hand : MonoBehaviour{
             kvp.Value.Clear();
         }
         numCards = 0;
-        HandCleared(this);
+        
+        if (_view != null)
+            HandCleared(this);
     }
 
 }

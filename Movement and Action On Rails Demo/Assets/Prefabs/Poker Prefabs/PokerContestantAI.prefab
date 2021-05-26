@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4177669841854544460}
   - component: {fileID: 1004797352514212268}
   - component: {fileID: 4200457542109888702}
+  - component: {fileID: 7148640037764324751}
   m_Layer: 0
   m_Name: PokerContestantAI
   m_TagString: Untagged
@@ -57,6 +58,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df81385282b61274e977de176cdeb848, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _contestantName: 
+  _contestantName: The Champ
   _games: []
   _character: {fileID: 0}
+--- !u!114 &7148640037764324751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723098034545754686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6b39b325a8879447b06cc5e96839fb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

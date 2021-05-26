@@ -58,8 +58,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e900213db604494bbe9b9b5db74ed7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _contestantName: 
-  _games: []
+  _contestantName: The Player
+  _game: {fileID: 0}
 --- !u!114 &2564779495427194822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,5 +75,6 @@ MonoBehaviour:
   start: {x: 0, y: 0, z: 0}
   cardOffset: 0
   faceUp: 0
-  cardPrefab: {fileID: 0}
+  cardPrefab: {fileID: 2489155897534059814, guid: 562c978ce6d75d14885371224495f04c,
+    type: 3}
   cardHolder: {fileID: 0}

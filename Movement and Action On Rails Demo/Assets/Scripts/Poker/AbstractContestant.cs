@@ -7,7 +7,7 @@ public abstract class AbstractContestant : MonoBehaviour
 {
     [SerializeField] protected string _contestantName;
     protected Hand _hand;
-    [SerializeField] protected List<PokerManager> _games;
+    [SerializeField] protected PokerManager _game;
     //The money that the contestant has left available to wager in a round
     protected int _money;
     //The money that the contestant has already wagered in a round
@@ -54,7 +54,8 @@ public abstract class AbstractContestant : MonoBehaviour
 
     public PokerManager game
     {
-        get {return _games[0];}
+        get {return _game;}
+        set {_game = value;}
     }
 
     public double score
@@ -70,6 +71,7 @@ public abstract class AbstractContestant : MonoBehaviour
     public string contestantName
     {
         get {return contestantName;}
+        set {contestantName = value;}
     }
 
     public void FillHand(List<Card> cards)
@@ -94,9 +96,9 @@ public abstract class AbstractContestant : MonoBehaviour
 
         //Make sure that the raisedBet is actually higher than the currentBet in the game
         //Make sure that the contestant cannot bet more monet rhan they actually have
-        if (raisedBet > _games[0].currentBet)
+        if (raisedBet > _game.currentBet)
         {   
-            _games[0].AddToPot(contribution);
+            _game.AddToPot(contribution);
 
             ChangeMoney(-contribution);
             _betMoney += contribution;
@@ -104,7 +106,7 @@ public abstract class AbstractContestant : MonoBehaviour
             status = ContestantStatus.Called;
 
             //Update the current bet
-            _games[0].OnRaise(raisedBet);
+            _game.OnRaise(raisedBet);
         }
         else
         {
@@ -118,33 +120,33 @@ public abstract class AbstractContestant : MonoBehaviour
         //How much does the contestant have to bet to meet the call?
         //Debug.Log("Bet: " + _games[0].currentBet);
         //CONDITION: The bet should always be greater than the amount the contestant has already wagered
-        int contribution = _games[0].currentBet - _betMoney;
+        int contribution = _game.currentBet - _betMoney;
 
         //If the contestant does not have enough money to meet the call, then offer whatever money the contestant has left
         if (contribution > _money)
             contribution = _money;
 
         //Also handles the edge case where the bet exceeds the contestant's available money
-        _games[0].AddToPot(contribution);
+        _game.AddToPot(contribution);
 
         ChangeMoney(-contribution);
         _betMoney += contribution;
 
         status = ContestantStatus.Called;
 
-        _games[0].OnCall();        
+        _game.OnCall();        
     }
 
     public void Check()
     {
         status = ContestantStatus.Called;
-        _games[0].OnCheck();
+        _game.OnCheck();
     }
 
     public void Fold()
     {
         status = ContestantStatus.Folded;
-        _games[0].OnFold(this);
+        _game.OnFold(this);
     }
 
     public void GiveBlind(int blind)
@@ -156,7 +158,7 @@ public abstract class AbstractContestant : MonoBehaviour
             contribution = _money;
         }
 
-        _games[0].AddToPot(contribution);
+        _game.AddToPot(contribution);
 
         ChangeMoney(-contribution);
         _betMoney = contribution;

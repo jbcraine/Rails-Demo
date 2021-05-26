@@ -21,7 +21,9 @@ public class HandView : MonoBehaviour
 
     public void hand_Clear(object sender)
     {
+        Debug.Log("Clear");
         Clear();
+        
     }
     public void Clear()
     {
