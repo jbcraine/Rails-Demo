@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 public class NPC : MonoBehaviour
 {
     public NPCDialogue dialogue;
-    public DialogueManager dialogueManager;
     public bool isTalking = false;
 
     //Can the player interact with the NPC?
@@ -19,8 +18,8 @@ public class NPC : MonoBehaviour
 
     public void Interact()
     {
-        dialogueManager.SetTalkingNPC(this);
-        dialogueManager.StartConversation(dialogue);
+        Managers.Dialogue.SetTalkingNPC(this);
+        Managers.Dialogue.StartConversation(dialogue);
     }
 
     private void OnMouseDown() {

@@ -3199,6 +3199,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1465244596}
   - component: {fileID: 1465244595}
+  - component: {fileID: 1465244598}
+  - component: {fileID: 1465244597}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -3240,6 +3242,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1465244597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465244594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cfb15fc2ab969c4888cf9ff3c0d7e6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1465244598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465244594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b67e721a329bd83448a126331059ecaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _deck: {fileID: 0}
+  _contestants: []
+  isPlayerTurn: 0
 --- !u!1 &1533240291
 GameObject:
   m_ObjectHideFlags: 0

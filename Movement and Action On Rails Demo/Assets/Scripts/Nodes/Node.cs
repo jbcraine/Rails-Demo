@@ -5,6 +5,7 @@ using UnityEngine;
 
 public  abstract class Node : MonoBehaviour
 {
+    private PointAndClickManager manager;
     [SerializeField]
     protected Transform standardPosition;
     public Vector3 adjustedPosition {get; protected set;}
@@ -23,12 +24,14 @@ public  abstract class Node : MonoBehaviour
     //TODO: Each Node can contian a variable saying how quickly the Rider should move
 
     protected virtual void Awake() {
-        adjustedPosition = new Vector3(standardPosition.position.x, standardPosition.position.y + GameManager.manager.playerHeight, 
-            standardPosition.position.z);
+        
     }
 
     protected virtual void Start() {
         metarequisite = GetComponent<Metarequisite>();
+        manager = FindObjectOfType<Managers>().GetComponent<PointAndClickManager>();
+        adjustedPosition = new Vector3(standardPosition.position.x, standardPosition.position.y + manager.playerHeight, 
+            standardPosition.position.z);
     }
 
     public Vector3 position
@@ -59,17 +62,17 @@ public  abstract class Node : MonoBehaviour
             }
         }
         */
-        if (GameManager.manager.currentNode != null)
-            GameManager.manager.currentNode.Leave();
+        if (manager.currentNode != null)
+            manager.currentNode.Leave();
 
         //If this Node has a view associated with it, then enable the component
         if (view)
         {
             view.enabled = true;
-            GameManager.manager.currentViewNode = view;
+            manager.currentViewNode = view;
         }
 
-        GameManager.manager.currentNode = this;
+        manager.currentNode = this;
         if (coll)
             coll.enabled = false;
         SetEnabledNodes(true);
@@ -82,7 +85,7 @@ public  abstract class Node : MonoBehaviour
         if (view)
         {
             view.enabled = false;
-            GameManager.manager.currentViewNode = null;
+            manager.currentViewNode = null;
             view.LeaveView();
         }
     }
@@ -102,9 +105,9 @@ public  abstract class Node : MonoBehaviour
     protected void OnMouseDown() 
     {
         //Get the Rail that leads from this Node to the currentNode
-        Rail hopOnRail = railsToDestinations[GameManager.manager.currentNode];
-        GameManager.manager.playerRider.currentRail = hopOnRail;
-        GameManager.manager.playerRider.StartMovingOnRail();
+        Rail hopOnRail = railsToDestinations[manager.currentNode];
+        manager.playerRider.currentRail = hopOnRail;
+        manager.playerRider.StartMovingOnRail();
     }
 
     //Populate the dictionary

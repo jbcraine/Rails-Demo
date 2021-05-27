@@ -21,6 +21,7 @@ public class LocationViewer : NodeViewer
     protected override void Start()
     {
         base.Start();
+        
     }
     
     // Update is called once per frame
@@ -41,7 +42,7 @@ public class LocationViewer : NodeViewer
     protected void SetFocusScroll()
     {
         //If the camera is facing the location, then enable the option to 
-        float dot = Vector3.Dot(GameManager.manager.cam.transform.forward, (_medium.position - GameManager.manager.cam.transform.position).normalized);
+        float dot = Vector3.Dot(Managers.PointAndClick.cam.transform.forward, (_medium.position - Managers.PointAndClick.cam.transform.position).normalized);
 
         if (dot >= 0.95f && !isCameraFacingNode)
         {
@@ -57,12 +58,12 @@ public class LocationViewer : NodeViewer
         //When the camera is facing the location, then enable the focus direction
         if (isCameraFacingNode && !_startFocusDirectionEnabled)
         {
-            GameManager.manager.movement.SetExclusivePanel(_startFocusDirection, true);
+            Managers.PointAndClick.movement.SetExclusivePanel(_startFocusDirection, true);
             _startFocusDirectionEnabled = true;
         }
         else if (!isCameraFacingNode && _startFocusDirectionEnabled)
         {
-            GameManager.manager.movement.SetExclusivePanel(_startFocusDirection, false);
+            Managers.PointAndClick.movement.SetExclusivePanel(_startFocusDirection, false);
             _startFocusDirectionEnabled = false;
          }
     }

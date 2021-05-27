@@ -6,6 +6,6 @@ public class FocusCondiition : Prerequisite
 {
     public override bool complete
     {
-        get {return GameManager.manager.currentlyFocused;}
+        get {return Managers.PointAndClick.currentlyFocused;}
     }
 }

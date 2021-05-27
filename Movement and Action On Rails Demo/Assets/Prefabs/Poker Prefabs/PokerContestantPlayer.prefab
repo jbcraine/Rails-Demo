@@ -72,9 +72,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c282eccd6a7547f4eb4b4af33a394759, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  start: {x: 0, y: 0, z: 0}
+  start: {x: 0, y: 0}
   cardOffset: 0
   faceUp: 0
-  cardPrefab: {fileID: 2489155897534059814, guid: 562c978ce6d75d14885371224495f04c,
+  cardPrefab: {fileID: 1765706305954145210, guid: be814d5c7e269e44a93876402ac1d6e1,
     type: 3}
+  pokerUI: {fileID: 8832160863197918983, guid: b4e482ff6c5bb22418e91247a67d97ac, type: 3}
   cardHolder: {fileID: 0}

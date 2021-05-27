@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Hand))]
 public class HandView : MonoBehaviour
@@ -8,15 +9,16 @@ public class HandView : MonoBehaviour
     Hand hand;
     Dictionary<int, CardView> fetchedCards;
 
-    public Vector3 start;
+    public Vector2 start;
     public float cardOffset;
     public bool faceUp = false;
     public GameObject cardPrefab;
+    public GameObject pokerUI;
     public GameObject cardHolder;
 
     public void Toggle (int card, bool isFaceUp)
     {
-        fetchedCards[card].IsFaceUp = isFaceUp;
+        fetchedCards[card].isFaceUp = isFaceUp;
     }
 
     public void hand_Clear(object sender)
@@ -29,7 +31,7 @@ public class HandView : MonoBehaviour
     {
         foreach(CardView view in fetchedCards.Values)
         {
-            Destroy(view.Card);
+            Destroy(view.card);
         }
         fetchedCards.Clear();
     }
@@ -41,14 +43,14 @@ public class HandView : MonoBehaviour
     }
     private void Start() {
         fetchedCards = new Dictionary<int, CardView>();
-
+        cardHolder.transform.SetParent(pokerUI.transform);
         hand.CardAdded += hand_CardAdded;
     }
 
     void hand_CardAdded(object sender, CardEventArgs e)
     {
         float co = cardOffset * hand.numCards;
-        Vector3 temp = start + new Vector3(co, 0f);
+        Vector2 temp = start + new Vector2(co, 0f);
         AddCard(temp, e.cardValue, e.cardSuit, hand.numCards);
     }
 
@@ -64,7 +66,7 @@ public class HandView : MonoBehaviour
             foreach(Card card in hand.cards)
             {
                 float co = cardOffset * cardCount;
-                Vector3 temp = start + new Vector3(co, 0f);
+                Vector2 temp = start + new Vector2(co, 0f);
                 AddCard(temp, card.value, card.suit, cardCount);
 
                 cardCount++;
@@ -77,7 +79,7 @@ public class HandView : MonoBehaviour
     {
         //Determine the index of the cardface in the CardFace array from the value and suit
 
-        GameObject cardCopy = (GameObject)Instantiate(cardPrefab);
+        GameObject cardCopy = Instantiate(cardPrefab, cardHolder.transform);
         cardCopy.transform.position = position;
 
         int cardIndex = GetCardIndex(value, suit);
@@ -87,8 +89,7 @@ public class HandView : MonoBehaviour
         cardModel.ToggleFace(faceUp);
 
         //Cannot use new
-        fetchedCards.Add(cardIndex, new CardView(cardCopy));
-        cardCopy.transform.parent = cardHolder.transform;
+        fetchedCards.Add(cardIndex, cardCopy.GetComponent<CardView>());
     }
 
     int GetCardIndex(CardValue value, CardSuit suit)

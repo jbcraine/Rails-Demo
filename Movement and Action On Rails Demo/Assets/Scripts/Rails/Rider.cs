@@ -28,6 +28,10 @@ public class Rider : MonoBehaviour
     private void Awake() {
         railRider = this.gameObject;
     }
+
+    private void Start() {
+       
+    }
     
     private void Update() {
         if (!currentRail)
@@ -36,11 +40,11 @@ public class Rider : MonoBehaviour
         if (!currentlyMoving)
             return;
 
-        if (targetedPosition == GameManager.manager.playerRider.transform.position)
+        if (targetedPosition == Managers.PointAndClick.playerRider.transform.position)
         {
             ArriveAtNode(currentRail.GetNodeAtPosition(progress));
             Move();
-            GameManager.manager.movement.SetPanels(ScrollDirection.Left | ScrollDirection.Right);
+            Managers.PointAndClick.movement.SetPanels(ScrollDirection.Left | ScrollDirection.Right);
         }
     }
 
@@ -48,14 +52,14 @@ public class Rider : MonoBehaviour
     public void StartMovingOnRail()
     {
         //Start by determining which side of the Rail the Rider is on..
-        if (GameManager.manager.currentNode.Equals(currentRail.pointA))
+        if (Managers.PointAndClick.currentNode.Equals(currentRail.pointA))
         {
             //A ---> B
             _direction = Direction.Forwards;
             progress = 0;
             destination = currentRail.railLength - 1;
         }
-        else if (GameManager.manager.currentNode.Equals(currentRail.pointB))
+        else if (Managers.PointAndClick.currentNode.Equals(currentRail.pointB))
         {
             //B ---> A
             _direction = Direction.Backwards;
@@ -73,8 +77,8 @@ public class Rider : MonoBehaviour
         currentlyMoving = true;
         completedRail = false;
         //When moving on a Rail, nothing is being focused on
-        GameManager.manager.currentlyFocused = false;
-        GameManager.manager.movement.SetPanels(ScrollDirection.None);
+        Managers.PointAndClick.currentlyFocused = false;
+        Managers.PointAndClick.movement.SetPanels(ScrollDirection.None);
         Move();
     }
 
@@ -93,12 +97,12 @@ public class Rider : MonoBehaviour
         if (_direction == Direction.Forwards)
         {
             targetedPosition = currentRail.GetPositionAtNode(progress + 1);
-            GameManager.manager.playerRider.transform.DOMove(targetedPosition, 2.0f);
+            Managers.PointAndClick.playerRider.transform.DOMove(targetedPosition, 2.0f);
 
             if (currentRail.UseCameraPositionOfNode(progress + 1))
             {
                 Quaternion nextRotation = currentRail.GetRotationAtNode(progress + 1);
-                GameManager.manager.playerRider.transform.DORotate(nextRotation.eulerAngles, 2.0f);
+                Managers.PointAndClick.playerRider.transform.DORotate(nextRotation.eulerAngles, 2.0f);
             }
 
             progress += 1;
@@ -106,12 +110,12 @@ public class Rider : MonoBehaviour
         else if (_direction == Direction.Backwards)
         {
             targetedPosition = currentRail.GetPositionAtNode(progress - 1);
-            GameManager.manager.playerRider.transform.DOMove(targetedPosition, 2.0f);
+            Managers.PointAndClick.playerRider.transform.DOMove(targetedPosition, 2.0f);
 
             if (currentRail.UseCameraPositionOfNode(progress - 1))
             {
                 Quaternion nextRotation = currentRail.GetRotationAtNode(progress - 1);
-                GameManager.manager.playerRider.transform.DORotate(nextRotation.eulerAngles, 2.0f);
+                Managers.PointAndClick.playerRider.transform.DORotate(nextRotation.eulerAngles, 2.0f);
             }
 
             progress -= 1;

@@ -31,6 +31,7 @@ public abstract class NodeViewer : MonoBehaviour
     [SerializeField]
     protected (float, float) clampRotationWhileFocused;
     public bool useClampWhenFocused {get; protected set;}
+  
     //public event OnFocusEventHandler focusChange;
 
     public (float, float) clamps
@@ -39,12 +40,11 @@ public abstract class NodeViewer : MonoBehaviour
     }
 
     protected void Awake() {
-        //focusChange += GameManager.manager.OnFocusChange;
+        
     }
 
     protected virtual void Start() {
         standardOrientation.position = GetComponent<Node>().adjustedPosition;
-    
         //Automatically disable this component when starting. Enable it again when necessary
         this.enabled = false;
     }
@@ -58,24 +58,24 @@ public abstract class NodeViewer : MonoBehaviour
     //To view the Node, adjust the orientation of the main camera
     public void Focus()
     {
-        GameManager.manager.playerRider.transform.DOMove(focusOrientation.position, 0.8f);
-        GameManager.manager.playerRider.transform.DORotate(focusOrientation.rotation.eulerAngles, 0.8f);
+        Managers.PointAndClick.playerRider.transform.DOMove(focusOrientation.position, 0.8f);
+        Managers.PointAndClick.playerRider.transform.DORotate(focusOrientation.rotation.eulerAngles, 0.8f);
 
-        GameManager.manager.movement.SetPanels(_midFocusDirections);
+        Managers.PointAndClick.movement.SetPanels(_midFocusDirections);
         currentlyFocused = true;
         //focusChange(true);
-        GameManager.manager.currentlyFocused = true;
+        Managers.PointAndClick.currentlyFocused = true;
     }
 
     public void EndFocus()
     {
-        GameManager.manager.playerRider.transform.DOMove(standardOrientation.position, 0.8f);
-        GameManager.manager.playerRider.transform.DORotate(standardOrientation.rotation.eulerAngles, 0.8f);
+        Managers.PointAndClick.playerRider.transform.DOMove(standardOrientation.position, 0.8f);
+        Managers.PointAndClick.playerRider.transform.DORotate(standardOrientation.rotation.eulerAngles, 0.8f);
         
-        GameManager.manager.movement.SetPanels(ScrollDirection.Left | ScrollDirection.Right | _startFocusDirection);
+        Managers.PointAndClick.movement.SetPanels(ScrollDirection.Left | ScrollDirection.Right | _startFocusDirection);
         currentlyFocused = false;
         //focusChange(false);
-        GameManager.manager.currentlyFocused = false;
+        Managers.PointAndClick.currentlyFocused = false;
     }
 
     //Called when leaving a Node to reset attributes 

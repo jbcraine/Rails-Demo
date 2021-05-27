@@ -8,7 +8,8 @@ public class VIPNodeCondition : Prerequisite
 {
     private Location[] VIPNodes;
 
-    private void Start() {
+    protected void Start()
+    {
         VIPNodes = GetComponent<Location>().VIPNodes;
     }
 
@@ -16,7 +17,7 @@ public class VIPNodeCondition : Prerequisite
     {
         foreach (Location l in VIPNodes)
         {
-            if (GameManager.manager.currentNode.Equals(l))
+            if (Managers.PointAndClick.currentNode.Equals(l))
                 return true;
         }
         return false;

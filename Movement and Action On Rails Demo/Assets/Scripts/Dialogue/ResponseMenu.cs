@@ -10,7 +10,6 @@ public class ResponseMenu : MonoBehaviour
     List<Image> responseBoxes;
     public RectTransform responseMenu;
     public float maxLinesPerWindow;
-    public DialogueManager dialogueManager;
 
     //Create the response menu according to the responses provided
     //Every response is in its own panel/text box. These responses are accumulated in a larger dialogue window.
@@ -55,12 +54,12 @@ public class ResponseMenu : MonoBehaviour
         //Set the npcResponse in the responseOption
         //Add functions to the events
         ResponseOption res = r.GetComponent<ResponseOption>();
-        res.OnSelect += dialogueManager.Reply;
+        res.OnSelect += Managers.Dialogue.Reply;
         res.npcResponseID = id;
 
         if (res.endConversation)
         {
-            res.OnEndConversation += dialogueManager.EndConversation;
+            res.OnEndConversation += Managers.Dialogue.EndConversation;
         }
         return r;
     }

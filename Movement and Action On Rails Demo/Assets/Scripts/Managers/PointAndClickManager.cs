@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class PointAndClickManager : MonoBehaviour
 {
-    public static GameManager manager {get; private set;}
     //[HideInInspector]
     public Node currentNode;
     //[HideInInspector]
@@ -14,11 +13,11 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public Camera cam;
     public UIControls movement;
-    public float playerHeight = 1.0f;
+    public float playerHeight = 2.0f;
     public bool currentlyFocused = false;
 
     private void Awake() {
-        manager = this;
+        
         cam = Camera.main;
     }
 

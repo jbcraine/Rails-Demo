@@ -5,12 +5,12 @@ using UnityEngine;
 //A CardView will alwayts be associated with a Card object
 public class CardView : MonoBehaviour
 {
-    public GameObject Card { get; private set; }
-    public bool IsFaceUp { get; set; }
+    public GameObject card { get; private set; }
+    public bool isFaceUp { get; set; }
 
     public CardView(GameObject card)
     {
-        Card = card;
-        IsFaceUp = false;
+        this.card = card;
+        isFaceUp = false;
     }
 }

@@ -15,7 +15,11 @@ public class ScrollMove : MonoBehaviour
     public (float, float) clamps;
 
     private void Awake() {
-        playerPOV = GameManager.manager.playerRider.gameObject;
+        playerPOV = Managers.PointAndClick.playerRider.gameObject;
+    }
+
+    private void Start() {
+    
     }
     private void Update() 
     {
@@ -53,18 +57,18 @@ public class ScrollMove : MonoBehaviour
     public void IfCursorOverTopPanel()
     {
         //This sucks but it works for now
-        if(GameManager.manager.currentViewNode.currentlyFocused)
-            GameManager.manager.currentViewNode.EndFocus();
+        if(Managers.PointAndClick.currentViewNode.currentlyFocused)
+            Managers.PointAndClick.currentViewNode.EndFocus();
         else
-            GameManager.manager.currentViewNode.Focus();
+            Managers.PointAndClick.currentViewNode.Focus();
     }
 
     public void IfCursorOverBottomPanel()
     {
-        if(!GameManager.manager.currentViewNode.currentlyFocused)
-            GameManager.manager.currentViewNode.Focus();
+        if(!Managers.PointAndClick.currentViewNode.currentlyFocused)
+            Managers.PointAndClick.currentViewNode.Focus();
         else
-            GameManager.manager.currentViewNode.EndFocus();
+            Managers.PointAndClick.currentViewNode.EndFocus();
     }
 
     public void IfCursorNotOverLeftPanel()
