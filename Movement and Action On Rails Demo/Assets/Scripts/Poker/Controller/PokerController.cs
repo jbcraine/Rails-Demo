@@ -10,9 +10,6 @@ public class PokerController : MonoBehaviour
     public Button startGameButton, startRoundButton;
     //The maximum value will need to be changed as the player's money changes
     public Slider moneySlider;
-    public Text callAndRaiseText, availableMoney, callAndCheckButtonText, currentBetText, currentPotText;
-    public Text winnerText, winningHandText;
-    public Text contestantEliminatedText;
     private int currentMoney;
     private int currentBet;
     private int currentCall;
@@ -21,6 +18,8 @@ public class PokerController : MonoBehaviour
     private int roundStartingMoney;
     
     private void Start() {
+        game = Managers.Poker;
+
         player.MoneyChanged += OnMoneyChanged;
         game.BetChanged += OnBetChanged;
         game.PotChanged += OnPotChanged;
@@ -121,7 +120,7 @@ public class PokerController : MonoBehaviour
         //moneySlider.value = adjustedValue;
         //currentBet = (int) adjustedValue;
         currentBet = (int) value;
-        callAndRaiseText.text = "$" + adjustedValue;
+        
     }
 
 
@@ -129,23 +128,18 @@ public class PokerController : MonoBehaviour
     {
         //Debug.Log(e.money);
         currentMoney = e.money;
-        availableMoney.text = "$" + currentMoney.ToString();
     }
 
     void OnBetChanged(object sender, BetEventArgs b)
     {
-        Debug.Log(b.currentBet);
+        //Debug.Log(b.currentBet);
         currentCall = b.currentBet;
         moneySlider.minValue = currentCall;
-        callAndRaiseText.text = "$" + currentCall.ToString();
-        callAndCheckButtonText.text = "Call";
-        currentBetText.text = "Current Bet: $" + currentCall.ToString();
     }
 
     void OnPotChanged(object sender, PotChangedEventArgs p)
     {
         currentPot = p._pot;
-        currentPotText.text = "Current Pot: $" + currentPot.ToString();
     }
 
     void OnRoundStarted(object sender, RoundStartedEventArgs r)
@@ -157,47 +151,25 @@ public class PokerController : MonoBehaviour
     void OnPotWon(object sender, WonPotEventArgs w)
     {
         //handName will be null if all by one contestant folds
-
-        winnerText.text = w.winnerName + " Wins The Round!";
-        winnerText.gameObject.SetActive(true);
-
-        if (w.showDownHappened)
-        {
-            if (w.showDownDrawed)
-            {
-                winnerText.text = "Draw!";
-                winningHandText.text = w.handName;
-            }
-            else
-            {
-                winningHandText.text = w.handName;
-            }
-                
-            winningHandText.gameObject.SetActive(true);
-        }
     }
 
     void OnContestantEliminated (object sender, ContestantEliminatedEventArgs c)
     {
-        winningHandText.gameObject.SetActive(false);
-        contestantEliminatedText.text = c.contestantName + " has been eliminated";
+        
     }
 
     void OnRoundEnded (object sender) 
     {
-        winnerText.gameObject.SetActive(false);
-        winningHandText.gameObject.SetActive(false);
         startRoundButton.interactable = true;
     }
 
     void OnAllContestantsCalled (object sender)
     {
-        callAndCheckButtonText.text = "Check";
+    
     }
 
     void OnMatchEnded (object sender, MatchEndEventArgs m)
     {
-        winnerText.text = m.winnerName + "Has Won the Game!";
         startGameButton.interactable = true;
         startRoundButton.interactable = false;
     }

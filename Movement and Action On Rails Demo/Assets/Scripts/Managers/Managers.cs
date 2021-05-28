@@ -12,8 +12,9 @@ public class Managers : MonoBehaviour
     public static DialogueManager Dialogue {get; private set;}
 
     private void Awake() {
-        //PointAndClick = GetComponent<PointAndClickManager>();
-        //Poker = GetComponent<PokerManager>();
+        PointAndClick = GetComponent<PointAndClickManager>();
+        Poker = GetComponent<PokerManager>();
+        Dialogue = GetComponent<DialogueManager>();
     }
     // Start is called before the first frame update
     void Start()

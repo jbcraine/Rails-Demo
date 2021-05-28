@@ -1062,7 +1062,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue: {fileID: 0}
-  dialogueManager: {fileID: 1057011932}
   isTalking: 0
 --- !u!1 &645593833
 GameObject:
@@ -1871,8 +1870,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5551516574f4ec4aacb82f7b6ed2eb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  managerPrefab: {fileID: 4936071220174124100, guid: 0ffef128f0606324498e70f9e78e5802,
-    type: 3}
   playerPrefab: {fileID: 7698116208502048283, guid: 7f348650b91a8ce44a4c715f850a392b,
     type: 3}
   oppoonentPrefab: {fileID: 4200457542109888702, guid: f8fe3ad81f22ef443bbb83dd7059c1bd,
@@ -2163,60 +2160,6 @@ MonoBehaviour:
   pointB: {fileID: 30795756}
   mediumNodes: []
   fullRail: []
---- !u!1 &1057011931
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1057011933}
-  - component: {fileID: 1057011932}
-  m_Layer: 0
-  m_Name: Dialogue Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1057011932
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1057011931}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31cf17b9c07d5cc4bb15679585a9da7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 1735307089}
-  dialogueUI: {fileID: 1194201152}
-  npcName: {fileID: 1394987624}
-  npcDialogueText: {fileID: 534567125}
-  continueButton: {fileID: 1700448754}
-  currentlyPrinting: 0
-  responseMenu: {fileID: 2120271861}
-  scroll: {fileID: 0}
-  npcDialogueBox: {fileID: 966719532}
-  playerDialogueBox: {fileID: 2120271856}
-  endWithContinue: 0
---- !u!4 &1057011933
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1057011931}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 593.7075, y: 123.07608, z: -28.418705}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 28
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1070552192
 GameObject:
   m_ObjectHideFlags: 0
@@ -2718,7 +2661,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue: {fileID: 11400000, guid: 2137a9dafad7aac4f8254794673bba9c, type: 2}
-  dialogueManager: {fileID: 1057011932}
   isTalking: 0
 --- !u!4 &1348200632 stripped
 Transform:
@@ -3198,9 +3140,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1465244596}
-  - component: {fileID: 1465244595}
-  - component: {fileID: 1465244598}
   - component: {fileID: 1465244597}
+  - component: {fileID: 1465244595}
+  - component: {fileID: 1465244599}
+  - component: {fileID: 1465244598}
+  - component: {fileID: 1465244600}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -3269,6 +3213,41 @@ MonoBehaviour:
   _deck: {fileID: 0}
   _contestants: []
   isPlayerTurn: 0
+--- !u!114 &1465244599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465244594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31cf17b9c07d5cc4bb15679585a9da7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1735307089}
+  dialogueUI: {fileID: 1194201152}
+  npcName: {fileID: 1394987624}
+  npcDialogueText: {fileID: 534567125}
+  continueButton: {fileID: 1700448754}
+  currentlyPrinting: 0
+  responseMenu: {fileID: 2120271861}
+  scroll: {fileID: 0}
+  npcDialogueBox: {fileID: 966719532}
+  playerDialogueBox: {fileID: 2120271856}
+  endWithContinue: 0
+--- !u!114 &1465244600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465244594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d0daee84c2bed34498c045f510f827a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1533240291
 GameObject:
   m_ObjectHideFlags: 0
@@ -3741,7 +3720,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1057011932}
+      - m_Target: {fileID: 1465244599}
         m_MethodName: ContinueDialogue
         m_Mode: 1
         m_Arguments:
@@ -4531,7 +4510,6 @@ MonoBehaviour:
     type: 3}
   responseMenu: {fileID: 2120271857}
   maxLinesPerWindow: 4.5
-  dialogueManager: {fileID: 1057011932}
 --- !u!1 &2125854956
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,11 +15,11 @@ public class ScrollMove : MonoBehaviour
     public (float, float) clamps;
 
     private void Awake() {
-        playerPOV = Managers.PointAndClick.playerRider.gameObject;
+        
     }
 
     private void Start() {
-    
+        playerPOV = Managers.PointAndClick.playerRider.gameObject;
     }
     private void Update() 
     {

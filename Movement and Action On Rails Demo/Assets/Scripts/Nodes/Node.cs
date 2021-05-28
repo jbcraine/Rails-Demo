@@ -5,7 +5,6 @@ using UnityEngine;
 
 public  abstract class Node : MonoBehaviour
 {
-    private PointAndClickManager manager;
     [SerializeField]
     protected Transform standardPosition;
     public Vector3 adjustedPosition {get; protected set;}
@@ -24,14 +23,13 @@ public  abstract class Node : MonoBehaviour
     //TODO: Each Node can contian a variable saying how quickly the Rider should move
 
     protected virtual void Awake() {
-        
+        metarequisite = GetComponent<Metarequisite>();
+        adjustedPosition = new Vector3(standardPosition.position.x, standardPosition.position.y + Managers.PointAndClick.playerHeight, 
+            standardPosition.position.z);
     }
 
     protected virtual void Start() {
-        metarequisite = GetComponent<Metarequisite>();
-        manager = FindObjectOfType<Managers>().GetComponent<PointAndClickManager>();
-        adjustedPosition = new Vector3(standardPosition.position.x, standardPosition.position.y + manager.playerHeight, 
-            standardPosition.position.z);
+        
     }
 
     public Vector3 position
@@ -62,17 +60,17 @@ public  abstract class Node : MonoBehaviour
             }
         }
         */
-        if (manager.currentNode != null)
-            manager.currentNode.Leave();
+        if (Managers.PointAndClick.currentNode != null)
+            Managers.PointAndClick.currentNode.Leave();
 
         //If this Node has a view associated with it, then enable the component
         if (view)
         {
             view.enabled = true;
-            manager.currentViewNode = view;
+            Managers.PointAndClick.currentViewNode = view;
         }
 
-        manager.currentNode = this;
+        Managers.PointAndClick.currentNode = this;
         if (coll)
             coll.enabled = false;
         SetEnabledNodes(true);
@@ -85,7 +83,7 @@ public  abstract class Node : MonoBehaviour
         if (view)
         {
             view.enabled = false;
-            manager.currentViewNode = null;
+            Managers.PointAndClick.currentViewNode = null;
             view.LeaveView();
         }
     }
@@ -105,9 +103,9 @@ public  abstract class Node : MonoBehaviour
     protected void OnMouseDown() 
     {
         //Get the Rail that leads from this Node to the currentNode
-        Rail hopOnRail = railsToDestinations[manager.currentNode];
-        manager.playerRider.currentRail = hopOnRail;
-        manager.playerRider.StartMovingOnRail();
+        Rail hopOnRail = railsToDestinations[Managers.PointAndClick.currentNode];
+        Managers.PointAndClick.playerRider.currentRail = hopOnRail;
+        Managers.PointAndClick.playerRider.StartMovingOnRail();
     }
 
     //Populate the dictionary

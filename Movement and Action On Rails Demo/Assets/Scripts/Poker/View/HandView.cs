@@ -11,10 +11,37 @@ public class HandView : MonoBehaviour
 
     public Vector2 start;
     public float cardOffset;
+    public float paddingFromLeft;
     public bool faceUp = false;
     public GameObject cardPrefab;
-    public GameObject pokerUI;
-    public GameObject cardHolder;
+    public PokerView pokerUI = null;
+
+    //The element of the UI that contains the player's cards within the larger UI
+    public RectTransform cardHolder;
+
+    
+     private void Awake() {
+        hand = GetComponent<Hand>();
+        
+    }
+    private void Start() {
+        fetchedCards = new Dictionary<int, CardView>();
+        pokerUI = FindObjectOfType<PokerView>();
+        cardHolder = pokerUI.cardContainer;
+        start = new Vector2(cardHolder.rect.min.x + paddingFromLeft, 0);
+        //This stinks. Find a way to pass in the controller
+        
+        //cardHolder.transform.SetParent(pokerUI.transform);
+
+        hand.CardAdded += hand_CardAdded;
+    }
+
+    //Get the rectTransform that the player's cards will be stored in within the UI
+    public void OnUILoaded(object sender, UILoadedEventArgs e)
+    {
+        //cardHolder = e.container;
+        //start = new Vector2 (0, 0);
+    }
 
     public void Toggle (int card, bool isFaceUp)
     {
@@ -36,20 +63,11 @@ public class HandView : MonoBehaviour
         fetchedCards.Clear();
     }
 
-    private void Awake() {
-        hand = GetComponent<Hand>();
-        cardHolder = new GameObject("cardHolder");
-        cardHolder.transform.position = start;
-    }
-    private void Start() {
-        fetchedCards = new Dictionary<int, CardView>();
-        cardHolder.transform.SetParent(pokerUI.transform);
-        hand.CardAdded += hand_CardAdded;
-    }
+   
 
     void hand_CardAdded(object sender, CardEventArgs e)
     {
-        float co = cardOffset * hand.numCards;
+        float co = cardOffset * hand.numCards + paddingFromLeft;
         Vector2 temp = start + new Vector2(co, 0f);
         AddCard(temp, e.cardValue, e.cardSuit, hand.numCards);
     }
@@ -80,7 +98,10 @@ public class HandView : MonoBehaviour
         //Determine the index of the cardface in the CardFace array from the value and suit
 
         GameObject cardCopy = Instantiate(cardPrefab, cardHolder.transform);
-        cardCopy.transform.position = position;
+
+        //The card will be placed into the cardHolder
+        cardCopy.transform.SetParent(cardHolder.transform);
+        cardCopy.transform.localPosition = position;
 
         int cardIndex = GetCardIndex(value, suit);
 
