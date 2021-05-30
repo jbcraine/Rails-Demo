@@ -22,5 +22,5 @@ public interface IPokerAI
     float CharacterInfluence (float handStrength);
 
     //Use the modifed hand strength to make a decision for this character
-    IPokerCommand MakeDecision (Hand hand, int moneyAvaialbe, PokerManager game);
+    IPokerCommand MakeDecision (Hand hand, int moneyAvaialbe, PokerGame game);
 }

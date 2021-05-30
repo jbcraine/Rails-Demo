@@ -26,6 +26,7 @@ public  abstract class Node : MonoBehaviour
         metarequisite = GetComponent<Metarequisite>();
         adjustedPosition = new Vector3(standardPosition.position.x, standardPosition.position.y + Managers.PointAndClick.playerHeight, 
             standardPosition.position.z);
+        
     }
 
     protected virtual void Start() {

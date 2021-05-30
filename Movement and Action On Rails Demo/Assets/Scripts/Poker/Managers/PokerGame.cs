@@ -5,7 +5,7 @@ using UnityEngine;
 //If Texas Hold'Em, give two cards
 //If 5 Card Stid, give five cards
 //If a player raises, set allContestantsCalled to 0, and go numContestants times untl each one is called or folded.
-public class PokerManager : MonoBehaviour
+public class PokerGame : MonoBehaviour
 {
     [SerializeField] private Deck _deck;
     [SerializeField] private List<AbstractContestant> _contestants;
@@ -19,6 +19,7 @@ public class PokerManager : MonoBehaviour
     private List<SidePot> _sidePots;
     private int _round = 0;
     private int _phase = 0;
+    public bool gameStarted;
     //The contestant whose turn it is
     private AbstractContestant _currentContestant;
     public bool isPlayerTurn = false;
@@ -33,6 +34,7 @@ public class PokerManager : MonoBehaviour
     public event WonPotEventHandler PotWon;
     public event AllContestantsCalledHandler CalledAllContestants;
     public event MatchEndEventHandler MatchEnded;
+    public event KillGameEventHandler KillGame;
 
 
     public int currentBet
@@ -61,11 +63,17 @@ public class PokerManager : MonoBehaviour
     {
         _ruleSet = GetComponent<IPokerGameType>();
         _sidePots = new List<SidePot>();
+        KillGame += OnKillGame;
     }
 
+    private void Update() {
+        if (!gameStarted && Input.GetKeyDown(KeyCode.E))
+            KillGame();
+    }
 
     public void StartMatch()
     {
+        gameStarted = true;
         ResetGame();
         
         //Give every contestant the starting amount of money and set the max size of their hands
@@ -303,6 +311,7 @@ public class PokerManager : MonoBehaviour
         //When the match is over, then the manager can be destroyed
         AbstractContestant winner = _contestantsInMatch[0];
         MatchEnded(this, new MatchEndEventArgs(winner.name));
+        gameStarted = false;
         Debug.Log("End game");
     }
 
@@ -584,6 +593,18 @@ public class PokerManager : MonoBehaviour
             Debug.Log(contestant.hand);
             contestant.hand.Clear();
         }
+    }
+
+    public void OnKillGame()
+    {
+        foreach (AbstractContestant contestant in _contestants)
+        {
+            Destroy (contestant.gameObject);
+        }
+
+        Destroy (_deck.gameObject);
+        Destroy(this.gameObject);
+        Managers.PointAndClick.movement.SetPanels(ScrollDirection.Left | ScrollDirection.Right);
     }
 
 }

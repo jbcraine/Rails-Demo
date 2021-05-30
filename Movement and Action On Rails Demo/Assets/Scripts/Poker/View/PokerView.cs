@@ -11,27 +11,50 @@ public class PokerView : MonoBehaviour
     public Text contestantEliminatedText;
     public RectTransform cardContainer;
     HandView handView;
-    public event UILoadedEventHandler UILoaded;
+    //public event UILoadedEventHandler UILoaded;
+    public event PokerUISetEventHandler PokerUISet;
+    private PokerGame game;
 
     private void Awake() {
-        Managers.Poker.BetChanged += OnBetChanged;
-        Managers.Poker.PotChanged += OnPotChanged;
-        Managers.Poker.ContestantEliminated += OnContestantEliminated;
-        Managers.Poker.PotWon += OnPotWon;
-        Managers.Poker.RoundEnded += OnRoundEnded;
-        Managers.Poker.CalledAllContestants += OnAllContestantsCalled;
-        Managers.Poker.MatchEnded += OnMatchEnded;
+        game = FindObjectOfType<PokerGame>();
+        if (game != null)
+        {
+            game.BetChanged += OnBetChanged;
+            game.PotChanged += OnPotChanged;
+            game.ContestantEliminated += OnContestantEliminated;
+            game.PotWon += OnPotWon;
+            game.RoundEnded += OnRoundEnded;
+            game.CalledAllContestants += OnAllContestantsCalled;
+            game.MatchEnded += OnMatchEnded;
+            game.KillGame += OnKillGame;
+        }
         
-        FindObjectOfType<PlayerContestant>().MoneyChanged += OnMoneyChanged;
+        
+        //FindObjectOfType<PlayerContestant>().MoneyChanged += OnMoneyChanged;
 
-        handView = FindObjectOfType<HandView>();
-        UILoaded += handView.OnUILoaded;
+        //handView = FindObjectOfType<HandView>();
+        //UILoaded += handView.OnUILoaded;
+
+        PokerUISet += Managers.PointAndClick.currentNode.GetComponent<Location>().OnPokerUISet;
+        
+
     }
 
     // Start is called before the first frame update
+    //When starting the UI, deactivate location nodes to prevent undesired movement
     void Start()
     {
-        UILoaded(this, new UILoadedEventArgs(cardContainer));
+        //UILoaded(this, new UILoadedEventArgs(cardContainer));
+        PokerUISet(false);
+    }
+
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            //If the game isn't started, then remove the UI and restore Point and Click control
+            //if (!game.gameStarted)
+            //    PokerUISet(true);
+        }
     }
 
 
@@ -104,4 +127,24 @@ public class PokerView : MonoBehaviour
     {
         winnerText.text = e.winnerName + "has Won the Game!";
     }
+
+    public void TearDownView()
+    {
+        PokerUISet -= Managers.PointAndClick.currentNode.GetComponent<Location>().OnPokerUISet;
+    }
+
+    public void OnKillGame()
+    {
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        Destroy(this.gameObject);
+
+        PokerUISet(true);
+    }
 }
+
+//The OnPokerUIRemoved event will need to subscribe locations from this class.
+//When loaded

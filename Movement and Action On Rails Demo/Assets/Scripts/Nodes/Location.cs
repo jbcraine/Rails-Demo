@@ -20,6 +20,8 @@ public class Location : Node
         coll = GetComponent<Collider>();
         view = GetComponent<NodeViewer>();
         PopulateRails();
+        if (coll != null)
+            coll.enabled = false;
     }
 
     protected override void Start() {
@@ -33,6 +35,7 @@ public class Location : Node
         foreach(Prop p in props)
         {
             p.enabled = true;
+            p.coll.enabled = true;
         }
 
         foreach(NPC npc in npcs)
@@ -53,5 +56,18 @@ public class Location : Node
         {
             npc.Activate(false);
         }
+
+        foreach (Prop p in props)
+        {
+            p.enabled = false;
+            p.coll.enabled = false;
+        }
+    }
+
+    //This method subscribes to an event in the PokerView class. When it loads, nodes will be deactivated to prevent unwanted behavior.
+    //When the UI is removed, then access to nodes is restored.
+    public void OnPokerUISet(bool set)
+    {
+        SetEnabledNodes(set);
     }
 }

@@ -8,6 +8,7 @@ using UnityEngine;
 //
 public class PokerGameStarter : Interactable
 {
+    public PokerGame gamePrefab;
     public PlayerContestant playerPrefab;
     public AIContestant oppoonentPrefab;
     public Deck deckPrefab;
@@ -27,13 +28,13 @@ public class PokerGameStarter : Interactable
     //This method would be better placed within a larger game Managers.Poker. Interact may call that method
     private void SetupPokerGame()
     {
-        
+        PokerGame game = Instantiate(gamePrefab);
         PlayerContestant player = Instantiate(playerPrefab);
         AIContestant ai = Instantiate(oppoonentPrefab);
         Deck gameDeck = Instantiate(deckPrefab);
         PokerController controller = Instantiate(PokerUIPrefab);
 
-        controller.SetGameManager(Managers.Poker);
+        controller.SetGameManager(game);
         controller.SetPlayer(player);
 
         List<AbstractContestant> contestants = new List<AbstractContestant>();
@@ -41,9 +42,12 @@ public class PokerGameStarter : Interactable
         contestants.Add(ai);
         foreach (AbstractContestant c in contestants)
         {
-            c.game = Managers.Poker;
+            c.game = game;
         }
-        Managers.Poker.SetContestants(contestants);
-        Managers.Poker.SetDeck(gameDeck);
+        game.SetContestants(contestants);
+        game.SetDeck(gameDeck);
+
+        Managers.PointAndClick.movement.SetPanels(ScrollDirection.None);
+        
     }
 }

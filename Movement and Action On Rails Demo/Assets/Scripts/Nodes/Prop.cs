@@ -5,7 +5,7 @@ using UnityEngine;
 public class Prop : MonoBehaviour
 {
     public Location propLocation;
-    private Collider coll;
+    public Collider coll;
     private Interactable interactable;
 
     // Start is called before the first frame update
@@ -13,6 +13,8 @@ public class Prop : MonoBehaviour
     {
         coll = GetComponent<Collider>();
         interactable = GetComponent<Interactable>();
+        if (coll != null)
+            coll.enabled = false;
     }
 
     protected void OnMouseDown() {

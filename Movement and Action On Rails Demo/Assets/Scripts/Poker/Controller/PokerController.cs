@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class PokerController : MonoBehaviour
 {
     [SerializeField] private PlayerContestant player;
-    [SerializeField] private PokerManager game;
+    private PokerGame game;
     public Button checkButton, raiseButton, foldButton;
     public Button startGameButton, startRoundButton;
     //The maximum value will need to be changed as the player's money changes
@@ -18,17 +18,21 @@ public class PokerController : MonoBehaviour
     private int roundStartingMoney;
     
     private void Start() {
-        game = Managers.Poker;
+        game = FindObjectOfType<PokerGame>();
 
-        player.MoneyChanged += OnMoneyChanged;
-        game.BetChanged += OnBetChanged;
-        game.PotChanged += OnPotChanged;
-        game.RoundStarted += OnRoundStarted;
-        game.ContestantEliminated += OnContestantEliminated;
-        game.PotWon += OnPotWon;
-        game.RoundEnded += OnRoundEnded;
-        game.CalledAllContestants += OnAllContestantsCalled;
-        game.MatchEnded += OnMatchEnded;
+        if (game != null)
+        {
+            player.MoneyChanged += OnMoneyChanged;
+            game.BetChanged += OnBetChanged;
+            game.PotChanged += OnPotChanged;
+            game.RoundStarted += OnRoundStarted;
+            game.ContestantEliminated += OnContestantEliminated;
+            game.PotWon += OnPotWon;
+            game.RoundEnded += OnRoundEnded;
+            game.CalledAllContestants += OnAllContestantsCalled;
+            game.MatchEnded += OnMatchEnded;
+            game.KillGame += OnKillGame;
+        }
     }
 
     //Activate the UI when it is the player's turn
@@ -41,7 +45,7 @@ public class PokerController : MonoBehaviour
     }
 
     //Deactivate the UI when the player finishes their turn
-    public void DeactivateUI()
+    public void DeactivateUI() 
     {
         checkButton.interactable = false;
         raiseButton.interactable = false;
@@ -50,7 +54,7 @@ public class PokerController : MonoBehaviour
     }
 
     //Assign a PokerManager to this controller
-    public void SetGameManager(PokerManager manager)
+    public void SetGameManager(PokerGame manager)
     {
         game = manager;
     }
@@ -172,5 +176,20 @@ public class PokerController : MonoBehaviour
     {
         startGameButton.interactable = true;
         startRoundButton.interactable = false;
+    }
+
+    public void TeardownController()
+    {
+
+    }
+
+    public void OnKillGame()
+    {
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        Destroy(this.gameObject);
     }
 }

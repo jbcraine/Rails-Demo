@@ -25,6 +25,7 @@ public class LocationScrollOver : MonoBehaviour
         locationLight = GetComponentInChildren<Light>();
         brighten_c = ChangeLightIntensity(true);
         dimmer_c = ChangeLightIntensity(false);
+        
     }
 
     private void Start() {

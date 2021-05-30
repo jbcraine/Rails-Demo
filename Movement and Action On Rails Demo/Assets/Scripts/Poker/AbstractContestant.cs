@@ -7,7 +7,7 @@ public abstract class AbstractContestant : MonoBehaviour
 {
     [SerializeField] protected string _contestantName;
     protected Hand _hand;
-    [SerializeField] protected PokerManager _game;
+    [SerializeField] protected PokerGame _game;
     //The money that the contestant has left available to wager in a round
     protected int _money;
     //The money that the contestant has already wagered in a round
@@ -52,7 +52,7 @@ public abstract class AbstractContestant : MonoBehaviour
         get {return _allIn;}
     }
 
-    public PokerManager game
+    public PokerGame game
     {
         get {return _game;}
         set {_game = value;}

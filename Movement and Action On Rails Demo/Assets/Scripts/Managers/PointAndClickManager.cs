@@ -23,6 +23,7 @@ public class PointAndClickManager : MonoBehaviour
 
     private void Start() {
         cam.transform.rotation = new Quaternion(0, 0, 0, 0);
+        startingNode.gameObject.SetActive(true);
         startingNode.Arrive();
         if (currentViewNode)
         {
